@@ -3341,4 +3341,4 @@ async function fxPacote(){if(typeof JSZip==='undefined')throw Error('Biblioteca 
   if((t.id==='fxMaqFile'||t.id==='fxExtFile')&&t.files.length){const k=t.id==='fxMaqFile'?'maq':'ext';for(const f of t.files){if(f.size>25e6)throw Error(f.name+' passa de 25 MB.');fxFiles[k].push(f)}if(k==='maq')await fxLerMaquininha();render();return}
  }catch(err){toast(err.message||'Não consegui ler o arquivo.',true)}},true);
 })();
-</script></body></html>
+</script><script src="k10-pagamento.js?v=1"></script></body></html>
