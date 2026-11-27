@@ -126,9 +126,14 @@
 
   function atualizarCartao() {
     var el = document.getElementById('k10-loja-card');
-    if (!el) return;
     var h = cartao();
-    if (h) el.outerHTML = h; else el.remove();
+    if (el) { if (h) el.outerHTML = h; else el.remove(); return; }
+    if (!h) return;
+    // o portal pode ter sido desenhado antes deste arquivo carregar: põe o cartão acima das abas
+    var app = document.getElementById('app');
+    var pag = app && app.querySelector(':scope > .page');
+    var bar = pag && pag.querySelector(':scope > .tab-bar');
+    if (bar && pag.querySelector(':scope > .staff-header')) bar.insertAdjacentHTML('beforebegin', h);
   }
 
   function alternar(acao) {
