@@ -1,0 +1,31 @@
+/* K10 Delivery · Pausar loja (27/11/2026) */
+
+/* site dos clientes: faixa de loja fechada */
+#k10-pausa{background:#7f1d1d;color:#fff;border-bottom:3px solid #ef4444;box-shadow:0 6px 18px #00000040}
+#k10-pausa .k10-pausa-in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;flex-wrap:wrap}
+#k10-pausa .k10-pausa-txt{display:grid;gap:3px;min-width:0}
+#k10-pausa .k10-pausa-txt b{font-size:17px;font-weight:900;letter-spacing:.2px;color:#fff}
+#k10-pausa .k10-pausa-txt span{font-size:13px;color:#ffe1e1}
+#k10-pausa .k10-pausa-wa{display:inline-flex;align-items:center;gap:6px;background:#22c55e;color:#062b14;font-weight:900;font-size:14px;padding:10px 16px;border-radius:999px;text-decoration:none;white-space:nowrap}
+#k10-pausa .k10-pausa-wa:hover{background:#4ade80}
+@media (max-width:600px){
+  #k10-pausa .k10-pausa-in{justify-content:center;text-align:center}
+  #k10-pausa .k10-pausa-wa{width:100%;justify-content:center}
+}
+/* com a loja pausada, o botão de ir para o pagamento fica apagado */
+.k10-pausada [data-go="checkout"],.k10-pausada [data-action="checkout"]{opacity:.45;filter:grayscale(1)}
+
+/* portal da equipe: cartão do ADM */
+.k10-loja{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:0 0 14px;padding:14px 16px;border-radius:16px;border:2px solid}
+.k10-loja .k10-loja-txt{display:grid;gap:4px;min-width:0;flex:1 1 260px}
+.k10-loja .k10-loja-txt b{font-size:16px;font-weight:900;letter-spacing:.3px}
+.k10-loja .k10-loja-txt p{margin:0;font-size:13px}
+.k10-loja-on{background:#0f3d24;border-color:#22c55e;color:#e3ffee}
+.k10-loja-on .k10-loja-txt b{color:#b8ffcf}
+.k10-loja-off{background:#5a1414;border-color:#ef4444;color:#ffe4e4}
+.k10-loja-off .k10-loja-txt b{color:#fff}
+.k10-loja .k10-loja-btn{min-width:170px;min-height:46px;font-size:15px;font-weight:900;border:0;border-radius:12px;cursor:pointer}
+.k10-loja-on .k10-loja-btn{background:#ef4444;color:#fff}
+.k10-loja-off .k10-loja-btn{background:#22c55e;color:#062b14}
+.k10-loja .k10-loja-btn[disabled]{opacity:.6;cursor:wait}
+@media (max-width:600px){.k10-loja .k10-loja-btn{width:100%}}
