@@ -1,0 +1,48 @@
+# K10 Delivery · regras do servidor (Hostinger / LiteSpeed)
+# Gerado pelo build. Para mudar, edite tools/montar.py e gere de novo.
+# (27/11/2026) CSP liberada para o Mercado Pago (formulário seguro do cartão). Levar esta mudança para o tools/montar.py.
+
+Options -Indexes
+DirectoryIndex index.html
+
+# Sempre HTTPS
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# arquivos internos do projeto nunca são servidos
+RewriteRule (^|/)(\.git|\.github|supabase|docs|tools)(/|$) - [R=404,L]
+RewriteRule \.(md|sql|py|sh|log|bak|zip)$ - [R=404,L]
+</IfModule>
+
+<IfModule mod_headers.c>
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' https://sdk.mercadopago.com https://*.mercadopago.com https://*.mercadopago.com.br https://*.mercadolibre.com https://*.mercadolivre.com https://*.mlstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.mercadopago.com https://*.mercadopago.com.br https://*.mercadolibre.com https://*.mercadolivre.com https://*.mlstatic.com; font-src 'self' https://fonts.gstatic.com https://*.mercadopago.com https://*.mercadopago.com.br https://*.mercadolibre.com https://*.mercadolivre.com https://*.mlstatic.com; img-src 'self' data: blob: https://*.mercadopago.com https://*.mercadopago.com.br https://*.mercadolibre.com https://*.mercadolivre.com https://*.mlstatic.com; media-src 'self' blob:; connect-src 'self' https://myknerrclisghgmlbgmj.supabase.co https://*.mercadopago.com https://*.mercadopago.com.br https://*.mercadolibre.com https://*.mercadolivre.com https://*.mlstatic.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src https://*.mercadopago.com https://*.mercadopago.com.br https://*.mercadolibre.com https://*.mercadolivre.com https://*.mlstatic.com; frame-ancestors 'none'; manifest-src 'self'; upgrade-insecure-requests"
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "DENY"
+Header always set Referrer-Policy "strict-origin-when-cross-origin"
+Header always set Permissions-Policy "camera=(), microphone=(), payment=(), usb=(), geolocation=(self)"
+Header always set Strict-Transport-Security "max-age=31536000"
+Header always set Cross-Origin-Opener-Policy "same-origin"
+
+# HTML, CSS e JS: o navegador confere se mudou (resposta 304 rápida) e nunca usa versão velha
+<FilesMatch "\.(html|css|js)$">
+Header set Cache-Control "no-cache"
+</FilesMatch>
+# Imagens e vídeos: guardados por 7 dias (troque o nome do arquivo se precisar mudar na hora)
+<FilesMatch "\.(webp|jpg|jpeg|png|gif|mp4|svg|woff2)$">
+Header set Cache-Control "public, max-age=604800"
+</FilesMatch>
+
+# Portal da equipe fora dos buscadores e sem cache
+<Files "equipe-c2d62835e4.html">
+Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+Header set Cache-Control "no-store"
+</Files>
+</IfModule>
+
+<IfModule mod_mime.c>
+AddType image/webp .webp
+AddType video/mp4 .mp4
+AddCharset utf-8 .html .css .js
+</IfModule>

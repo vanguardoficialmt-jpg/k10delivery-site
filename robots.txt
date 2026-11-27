@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /k10-config.js
+
+Sitemap: https://k10delivery.com.br/sitemap.xml

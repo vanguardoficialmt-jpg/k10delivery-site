@@ -1,0 +1,113 @@
+/* K10 Delivery · Tela de pagamento online (usa as cores do site quando existirem) */
+.k10pg-travado { overflow: hidden; }
+
+.k10pg-fundo {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; align-items: center; justify-content: center;
+  padding: 16px;
+  background: rgba(3, 6, 18, .78);
+  backdrop-filter: blur(4px);
+}
+.k10pg-caixa {
+  position: relative;
+  width: 100%; max-width: 440px; max-height: calc(100vh - 32px); overflow: auto;
+  padding: 28px 22px 22px;
+  border: 1px solid var(--line, #1f3170);
+  border-radius: var(--radius, 18px);
+  background: var(--surface, #101b42);
+  color: var(--cream, #eaf3ff);
+  font-family: inherit;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .45);
+  text-align: center;
+}
+.k10pg-entrega { max-width: 520px; }
+.k10pg-x {
+  position: absolute; top: 10px; right: 12px;
+  width: 36px; height: 36px; border: 0; border-radius: 50%;
+  background: transparent; color: var(--muted, #9fb0d6);
+  font-size: 26px; line-height: 1; cursor: pointer;
+}
+.k10pg-x:hover, .k10pg-x:focus-visible { background: rgba(255, 255, 255, .08); color: #fff; outline: none; }
+
+.k10pg-sobre { margin: 0 0 4px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted, #9fb0d6); }
+.k10pg-titulo { margin: 0 0 10px; font-size: 22px; line-height: 1.2; color: #fff; }
+.k10pg-valor { margin: 4px 0 14px; font-size: 32px; font-weight: 800; color: var(--gold, #45c8ff); letter-spacing: -.01em; }
+
+.k10pg-qr {
+  display: block; width: 232px; height: 232px; margin: 0 auto 14px;
+  padding: 10px; border-radius: 14px; background: #fff;
+  image-rendering: pixelated;
+}
+.k10pg-entrega .k10pg-qr { width: 300px; height: 300px; max-width: 100%; }
+
+.k10pg-pix { display: flex; flex-direction: column; gap: 14px; }
+.k10pg-qr { margin-bottom: 8px; }
+.k10pg-dica { margin: 0; font-size: 13px; line-height: 1.45; color: var(--muted, #9fb0d6); }
+.k10pg-bloco-copia .k10pg-dica { margin-top: 8px; }
+/* No celular o QR não dá para ler na mesma tela: o copia e cola vem primeiro */
+@media (max-width: 560px), (pointer: coarse) {
+  .k10pg-bloco-copia { order: -1; }
+}
+.k10pg-rotulo { display: block; margin: 0 0 6px; text-align: left; font-size: 13px; font-weight: 600; color: var(--muted, #9fb0d6); }
+.k10pg-codigo {
+  display: block; width: 100%; box-sizing: border-box; margin: 0 0 10px; padding: 10px 12px;
+  border: 1px solid var(--line, #1f3170); border-radius: 10px;
+  background: rgba(0, 0, 0, .25); color: var(--cream, #eaf3ff);
+  font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; word-break: break-all; resize: none;
+}
+
+.k10pg-recebedor {
+  margin: 14px 0 0; padding: 10px 12px; border-radius: 10px;
+  background: rgba(69, 200, 255, .08); border: 1px solid rgba(69, 200, 255, .25);
+  font-size: 13px; line-height: 1.45; text-align: left;
+}
+.k10pg-espera, .k10pg-carregando {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin: 16px 0 4px; font-size: 14px; color: var(--cream, #eaf3ff);
+}
+.k10pg-espera span:last-child { text-align: left; }
+.k10pg-carregando { padding: 28px 0; }
+.k10pg-validade { min-height: 1.2em; margin: 2px 0 0; font-size: 13px; color: var(--muted, #9fb0d6); }
+.k10pg-msg { margin: 0 0 12px; font-size: 15px; line-height: 1.5; }
+.k10pg-msg-erro {
+  padding: 10px 12px; border-radius: 10px; text-align: left;
+  background: rgba(255, 90, 90, .1); border: 1px solid rgba(255, 90, 90, .35); color: #ffd6d6;
+}
+.k10pg-mini { margin: 12px 0 0; font-size: 12px; line-height: 1.45; color: var(--muted, #9fb0d6); }
+
+.k10pg-acoes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 16px; }
+.k10pg-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: 0 18px; border: 0; border-radius: 10px;
+  background: var(--royal, #2f5bff); color: #fff;
+  font: inherit; font-size: 15px; font-weight: 700; text-decoration: none; cursor: pointer;
+}
+.k10pg-btn:hover { filter: brightness(1.1); }
+.k10pg-btn:focus-visible { outline: 2px solid var(--gold, #45c8ff); outline-offset: 2px; }
+.k10pg-btn:disabled { opacity: .6; cursor: default; }
+.k10pg-sec { background: transparent; border: 1px solid var(--line, #1f3170); color: var(--cream, #eaf3ff); }
+.k10pg-largo { width: 100%; }
+
+.k10pg-ok {
+  width: 64px; height: 64px; margin: 4px auto 12px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--good, #2ec38b); color: #fff; font-size: 34px; font-weight: 800;
+}
+.k10pg-brick { margin: 4px 0 0; text-align: left; }
+
+.k10pg-spin {
+  width: 18px; height: 18px; flex: none; border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, .2); border-top-color: var(--gold, #45c8ff);
+  animation: k10pg-gira .8s linear infinite;
+}
+@keyframes k10pg-gira { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .k10pg-spin { animation-duration: 2.4s; } }
+
+@media (max-width: 420px) {
+  .k10pg-fundo { padding: 0; align-items: flex-end; }
+  .k10pg-caixa { max-height: 100vh; border-radius: 18px 18px 0 0; padding: 26px 16px 18px; }
+  .k10pg-qr { width: 210px; height: 210px; }
+}
+
+/* Site K10: no tema claro, o negrito dos painéis fica escuro; dentro da caixa de pagamento (fundo escuro) fica claro */
+html.k10-light .panel .pay-box b { color: #ffffff; }
